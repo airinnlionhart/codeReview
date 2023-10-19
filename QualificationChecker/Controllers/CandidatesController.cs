@@ -14,7 +14,7 @@ namespace QualificationChecker.Controllers
 
         public CandidatesController(ILogger<CandidatesController> logger)
         {
-            // Cause I love logging
+            // Cause I love logging but not using for this case
             _logger = logger;
         }
 
@@ -32,7 +32,7 @@ namespace QualificationChecker.Controllers
                 bool isInterested = candidate.interestedPositionIds.Any(candidatePositionId =>
                     request.organization.orgQuestions.Any(orgQuestion => orgQuestion.positionId == candidatePositionId));
 
-                //know out questions
+                //knock out questions
                 bool meetsAgeRequirements = candidate.age >= request.organization.ageRequirement;
 
                 
