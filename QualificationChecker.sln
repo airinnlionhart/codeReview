@@ -5,6 +5,8 @@ VisualStudioVersion = 25.0.1706.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QualificationChecker", "QualificationChecker\QualificationChecker.csproj", "{3041A8B7-F0EB-41D9-997D-0FA2AB09710A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestQualificationChecker", "TestQualificationChecker\TestQualificationChecker.csproj", "{8D32EA03-6630-44AB-ADDB-EB7A91C2EEDF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3041A8B7-F0EB-41D9-997D-0FA2AB09710A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3041A8B7-F0EB-41D9-997D-0FA2AB09710A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3041A8B7-F0EB-41D9-997D-0FA2AB09710A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D32EA03-6630-44AB-ADDB-EB7A91C2EEDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D32EA03-6630-44AB-ADDB-EB7A91C2EEDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D32EA03-6630-44AB-ADDB-EB7A91C2EEDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D32EA03-6630-44AB-ADDB-EB7A91C2EEDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
