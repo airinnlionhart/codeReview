@@ -100,9 +100,14 @@ namespace QualificationChecker.Controllers
                     }
                 }
             }
-
-            // Return the list of qualified candidates
-            return Ok(qualifiedCandidates);
+            if (qualifiedCandidates.Count >= 1)
+            { // Return the list of qualified candidates
+                return Ok(qualifiedCandidates);
+            }
+            else
+            {
+                return Ok("No Matching Canidates");
+            }
         }
 
         private bool MatchAnswers(bool candidateAnswers, bool organizationAnswers)

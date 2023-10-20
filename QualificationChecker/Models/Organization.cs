@@ -9,7 +9,7 @@ namespace QualificationChecker.Models
         public int orgId { get; set; }
 
         [Required(ErrorMessage = "Age requirement is required.")]
-        [Range(18, 120, ErrorMessage = "Age requirement must be between 14 and 70.")]
+        [Range(14, 120, ErrorMessage = "Age requirement must be between 14 and 70.")]
         public int ageRequirement { get; set; }
 
         public List<orgQuestion> orgQuestions{ get; set; }

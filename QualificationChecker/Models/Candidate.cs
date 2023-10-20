@@ -13,7 +13,7 @@ namespace QualificationChecker.Models
         public string fullName { get; set; }
 
         [Required(ErrorMessage = "Age is required.")]
-        [Range(14, 105, ErrorMessage = "Age must be between 14 and 70.")]
+        [Range(14, 70, ErrorMessage = "Age must be between 14 and 70.")]
         public int age { get; set; }
 
         public int organizationId { get; set; }
