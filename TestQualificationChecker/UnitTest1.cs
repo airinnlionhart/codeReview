@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using QualificationChecker.Controllers;
 using QualificationChecker.Models;
 using static QualificationChecker.Controllers.CandidatesController;
