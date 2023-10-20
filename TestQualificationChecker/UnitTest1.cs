@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QualificationChecker.Controllers;
 using QualificationChecker.Models;
-using System.Collections.Generic;
 using static QualificationChecker.Controllers.CandidatesController;
 
 namespace QualificationChecker.Tests
@@ -11,53 +8,233 @@ namespace QualificationChecker.Tests
     [TestClass]
     public class CandidatesControllerTests
     {
-        private object logger;
 
         [TestMethod]
         public void ShowQualifiedCandidates_ReturnsQualifiedCandidates()
         {
             // Arrange
-            
-            var controller = new CandidatesController((ILogger<CandidatesController>)logger);
+
+            CandidatesController controller = new();
 
             var request = new MatchRequest
             {
-                organization = new Organization
+                Organization = new Organization
                 {
-                    orgId = 1,
-                    ageRequirement = 25,
-                    orgQuestions = new List<orgQuestion>
+                    OrgId = 1,
+                    AgeRequirement = 25,
+                    OrgQuestions = new List<OrgQuestion>
                     {
-                        new orgQuestion { id = 1, positionId = 1, questionText = "Question 1", answer = true },
-                        new orgQuestion { id = 2, positionId = 1, questionText = "Question 2", answer = true },
+                        new OrgQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
+                        new OrgQuestion { Id = 2, PositionId = 1, QuestionText = "Question 2", Answer = true },
                     }
                 },
-                candidates = new List<Candidate>
+                Candidates = new List<Candidate>
                 {
                     new Candidate
                     {
-                        id = 1,
-                        fullName = "John Doe",
-                        age = 30,
-                        organizationId = 1,
-                        interestedPositionIds = new List<int> { 1, 2 },
-                        candidateQuestions = new List<candidateQuestion>
+                        Id = 1,
+                        FullName = "John Doe",
+                        Age = 30,
+                        OrganizationId = 1,
+                        InterestedPositionIds = new List<int> { 1, 2 },
+                        CandidateQuestions = new List<CandidateQuestion>
                         {
-                            new candidateQuestion { id = 1, positionId = 1, questionText = "Question 1", answer = true },
-                            new candidateQuestion { id = 2, positionId = 1, questionText = "Question 2", answer = true },
+                            new CandidateQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
+                            new CandidateQuestion { Id = 2, PositionId = 1, QuestionText = "Question 2", Answer = true },
                         }
                     },
                     new Candidate
                     {
-                        id = 2,
-                        fullName = "Jane Smith",
-                        age = 27,
-                        organizationId = 1,
-                        interestedPositionIds = new List<int> { 1 },
-                        candidateQuestions = new List<candidateQuestion>
+                        Id = 2,
+                        FullName = "Jane Smith",
+                        Age = 27,
+                        OrganizationId = 1,
+                        InterestedPositionIds = new List<int> { 1 },
+                        CandidateQuestions = new List<CandidateQuestion>
                         {
-                            new candidateQuestion { id = 1, positionId = 1, questionText = "Question 1", answer = true },
-                            new candidateQuestion { id = 2, positionId = 1, questionText = "Question 2", answer = false },
+                            new CandidateQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
+                            new CandidateQuestion { Id = 2, PositionId = 1, QuestionText = "Question 2", Answer = true },
+                        }
+                    }
+                }
+            };
+
+            // Act
+            var result = controller.ShowQualifiedCandidates(request) as ObjectResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(200, result.StatusCode);
+            var qualifiedCandidates = result.Value as List<Candidate>;
+            Assert.IsNotNull(qualifiedCandidates);
+            Assert.AreEqual(2, qualifiedCandidates.Count); // Expect only the first candidate to be qualified
+        }
+
+        [TestMethod]
+        public void ShowQualifiedCandidates_ReturnsNoQualifiedCandidatesAge()
+        {
+            // Arrange
+
+            CandidatesController controller = new();
+
+            var request = new MatchRequest
+            {
+                Organization = new Organization
+                {
+                    OrgId = 1,
+                    AgeRequirement = 18,
+                    OrgQuestions = new List<OrgQuestion>
+                    {
+                        new OrgQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
+                        new OrgQuestion { Id = 2, PositionId = 1, QuestionText = "Question 2", Answer = true },
+                    }
+                },
+                Candidates = new List<Candidate>
+                {
+                    new Candidate
+                    {
+                        Id = 1,
+                        FullName = "John Doe",
+                        Age = 16,
+                        OrganizationId = 1,
+                        InterestedPositionIds = new List<int> { 1, 2 },
+                        CandidateQuestions = new List<CandidateQuestion>
+                        {
+                            new CandidateQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
+                            new CandidateQuestion { Id = 2, PositionId = 1, QuestionText = "Question 2", Answer = true },
+                        }
+                    },
+                    new Candidate
+                    {
+                        Id = 2,
+                        FullName = "Jane Smith",
+                        Age = 27,
+                        OrganizationId = 1,
+                        InterestedPositionIds = new List<int> { 1 },
+                        CandidateQuestions = new List<CandidateQuestion>
+                        {
+                            new CandidateQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
+                            new CandidateQuestion { Id = 2, PositionId = 1, QuestionText = "Question 2", Answer = false },
+                        }
+                    }
+                }
+            };
+
+            // Act
+            ObjectResult? result = controller.ShowQualifiedCandidates(request) as ObjectResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(200, result.StatusCode);
+            var qualifiedCandidates = result.Value as List<Candidate>;
+            Assert.AreEqual(null, qualifiedCandidates?.Count); // Expect only the first candidate to be qualified
+        }
+
+        [TestMethod]
+        public void ShowQualifiedCandidates_ReturnsCandidateJane()
+        {
+            // Arrange
+
+            CandidatesController controller = new();
+
+            var request = new MatchRequest
+            {
+                Organization = new Organization
+                {
+                    OrgId = 1,
+                    AgeRequirement = 25,
+                    OrgQuestions = new List<OrgQuestion>
+                    {
+                        new OrgQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
+                        new OrgQuestion { Id = 2, PositionId = 1, QuestionText = "Question 2", Answer = true },
+                    }
+                },
+                Candidates = new List<Candidate>
+                {
+                    new Candidate
+                    {
+                        Id = 1,
+                        FullName = "John Doe",
+                        Age = 30,
+                        OrganizationId = 1,
+                        InterestedPositionIds = new List<int> { 1, 2 },
+                        CandidateQuestions = new List<CandidateQuestion>
+                        {
+                            new CandidateQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
+                            new CandidateQuestion { Id = 2, PositionId = 1, QuestionText = "Question 2", Answer = false },
+                        }
+                    },
+                    new Candidate
+                    {
+                        Id = 2,
+                        FullName = "Jane Smith",
+                        Age = 27,
+                        OrganizationId = 1,
+                        InterestedPositionIds = new List<int> { 1 },
+                        CandidateQuestions = new List<CandidateQuestion>
+                        {
+                            new CandidateQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
+                            new CandidateQuestion { Id = 2, PositionId = 1, QuestionText = "Question 2", Answer = true },
+                        }
+                    }
+                }
+            };
+
+            // Act
+            var result = controller.ShowQualifiedCandidates(request) as ObjectResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(200, result.StatusCode);
+            var qualifiedCandidates = result.Value as List<Candidate>;
+            Assert.AreEqual(1, qualifiedCandidates?.Count);// Expects Jance
+            Assert.AreEqual("Jane Smith", qualifiedCandidates?[0].FullName);
+        }
+
+        [TestMethod]
+        public void ShowQualifiedCandidates_ReturnsNoQualifiedCandidatesListDoNotMatch()
+        {
+            // Arrange
+
+            CandidatesController controller = new();
+
+            var request = new MatchRequest
+            {
+                Organization = new Organization
+                {
+                    OrgId = 1,
+                    AgeRequirement = 25,
+                    OrgQuestions = new List<OrgQuestion>
+                    {
+                        new OrgQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
+                        new OrgQuestion { Id = 2, PositionId = 1, QuestionText = "Question 2", Answer = true },
+                    }
+                },
+                Candidates = new List<Candidate>
+                {
+                    new Candidate
+                    {
+                        Id = 1,
+                        FullName = "John Doe",
+                        Age = 30,
+                        OrganizationId = 1,
+                        InterestedPositionIds = new List<int> { 1, 2 },
+                        CandidateQuestions = new List<CandidateQuestion>
+                        {
+                            new CandidateQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
+                        }
+                    },
+                    new Candidate
+                    {
+                        Id = 2,
+                        FullName = "Jane Smith",
+                        Age = 27,
+                        OrganizationId = 1,
+                        InterestedPositionIds = new List<int> { 1 },
+                        CandidateQuestions = new List<CandidateQuestion>
+                        {
+                            new CandidateQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
+                            new CandidateQuestion { Id = 2, PositionId = 1, QuestionText = "Question 2", Answer = true },
                         }
                     }
                 }

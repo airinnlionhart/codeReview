@@ -6,10 +6,10 @@ namespace QualificationChecker.Controllers
     {
         public class MatchRequest
         {
-            public Organization organization { get; set; }
-            public List<Candidate> candidates { get; set; }
+            public Organization Organization { get; set; }
+            public List<Candidate> Candidates { get; set; }
         }
     }
 
-   
+
 }
