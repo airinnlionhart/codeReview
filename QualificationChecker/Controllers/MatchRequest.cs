@@ -10,6 +10,4 @@ namespace QualificationChecker.Controllers
             public List<Candidate> Candidates { get; set; }
         }
     }
-
-
 }
