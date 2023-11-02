@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations; // For validation attributes
+﻿using System.ComponentModel.DataAnnotations; // For validation attributes
 
 namespace QualificationChecker.Models
 {
