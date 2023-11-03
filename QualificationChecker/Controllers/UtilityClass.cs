@@ -26,7 +26,14 @@ namespace QualificationChecker.Controllers
 
     }
 
-    public class CandidateUtilities : UtilityClass {
+    public class MatchRequest
+    {
+        public Organization Organization { get; set; }
+        public List<Candidate> Candidates { get; set; }
+    }
+
+    public class CandidateUtilities : UtilityClass
+    {
         public CandidateUtilities(Candidate candidate, Organization organization) : base(candidate, organization)
         {
         }

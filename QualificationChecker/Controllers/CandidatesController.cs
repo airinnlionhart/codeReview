@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using QualificationChecker.Models;
-using QualificationChecker.Controllers;
+
 
 namespace QualificationChecker.Controllers
 {
