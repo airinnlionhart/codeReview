@@ -20,7 +20,6 @@ namespace QualificationChecker.Controllers
                 if (request.Candidates == null)
                 {
                     return Ok("No Candidate at this time you can try adding more budget");
-
                 }
                 else if (request.Organization?.OrgQuestions == null)
                 {
@@ -29,18 +28,17 @@ namespace QualificationChecker.Controllers
 
                 else
                 {
-                    
                     //Loop through each candaite and compare answers
                     foreach (var candidate in request.Candidates)
 
                     {   // Initialize you Candidate to work with utilities
-                        var myCandidate = new UtilityClass(candidate, request.Organization);
+                        var myCandidate = new CandidateUtilities(candidate, request.Organization);
 
-                        
+
                         // only run this if they pass the knockout questions
                         if (myCandidate.Candidate.OrganizationId == myCandidate.Organization.OrgId && myCandidate.IsInterested() && myCandidate.MeetsAgeRequirement())
                         {
-                           
+
                             // Check to make sure postionId makes a dictionary 
                             if (myCandidate.OrgAnswersDictionary != null)
                             {
@@ -71,7 +69,7 @@ namespace QualificationChecker.Controllers
                 Console.Write(stackTrace);
             }
         }
-      
+
 
     }
 }
