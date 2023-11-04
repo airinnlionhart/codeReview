@@ -1,17 +1,17 @@
 # codeReview
-This is a code review challenge for an API to return a list of candidates that have all the qualification answer  correctly.
-
+This is a code review challenge for an API to return a list of candidates that have all the qualification answer  correctly.<br>
+<br>
 I have no database connected, so this example is using a http post to check and sole purpose is for logic and to progress my skills in dotnet.
 My Code is currently under the classes branch
+<br>
+<br>For Monitor Performance and Health <br>
 
-For Monitor Performance and Health 
-
--Health-
+-Health-<br>
 Success Rate - SLI Http Post 200's Since this is a customer facing route I would like to maintain 99% success rate
 Failures - SLI Http Post 400's Missing required fields if I had logs check to see what what is missing, 500 server errors or availability issues since it not reaching out to other api or servers
+<br>
 
-
--Perfomance- 
+-Perfomance- <br>
 K6 LoadTest
  data_received..................: 1.2 MB 39 kB/s
      data_sent......................: 1.6 MB 54 kB/s
@@ -29,13 +29,13 @@ K6 LoadTest
      iterations.....................: 2902   96.441059/s
      vus............................: 10     min=10      max=10
      vus_max........................: 10     min=10      max=10
-
+<br>
 running (0m30.1s), 00/10 VUs, 2902 complete and 0 interrupted iterations
-
+<br>
 Since this route would expect about this much traffic at peaktimes I would like to maintain a http_req_duration < 500ms  
+<br>
 
-
-SLOs
-Succesrate of 99%
+SLOs<br>
+Succesrate of 99%<br>
 Latency under 500ms
 
