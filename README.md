@@ -30,7 +30,7 @@ Failures - SLI Http Post 400's Missing required fields if I had logs check to se
 
 running (0m30.1s), 00/10 VUs, 2902 complete and 0 interrupted iterations
 
-Since thisroute would expect about this much traffic at peaktimes I would like to maintain a http_req_duration < 500ms  
+Since this route would expect about this much traffic at peaktimes I would like to maintain a http_req_duration < 500ms  
 
 
 SLOs
