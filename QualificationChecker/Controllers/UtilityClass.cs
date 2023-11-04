@@ -25,7 +25,7 @@ namespace QualificationChecker.Controllers
         }
 
     }
-
+    // fake incoming query call that an http request
     public class MatchRequest
     {
         public Organization Organization { get; set; }
@@ -52,8 +52,9 @@ namespace QualificationChecker.Controllers
         // Method to make sure they meet the age requirement
         public bool MeetsAgeRequirement()
         {
-            return Candidate.Age >= Organization.AgeRequirement;
+            return Candidate.Age >= Organization.MinAgeRequirement;
         }
+
         // Method to return if the answers match
         private bool MatchAnswers(bool candidateAnswers, bool organizationAnswers)
         {

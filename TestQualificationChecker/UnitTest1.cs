@@ -21,7 +21,7 @@ namespace QualificationChecker.Tests
                 Organization = new Organization
                 {
                     OrgId = 1,
-                    AgeRequirement = 18,
+                    MinAgeRequirement = 18,
                     OrgQuestions = new List<OrgQuestion>
                     {
                         new OrgQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
