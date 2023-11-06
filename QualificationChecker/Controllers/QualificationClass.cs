@@ -2,13 +2,13 @@
 
 namespace QualificationChecker.Controllers
 {
-    public abstract class QualificationController
+    public abstract class QualificationManager
     {
         public Candidate Candidate { get; private set; }
         public Organization Organization { get; private set; }
         protected List<Candidate> QualifiedCandidates = new List<Candidate>();
 
-        protected QualificationController(Candidate candidate, Organization organization)
+        protected QualificationManager(Candidate candidate, Organization organization)
         {
             Candidate = candidate;
             Organization = organization;
@@ -97,7 +97,7 @@ namespace QualificationChecker.Controllers
         }
     }
 
-    public class CandidateQualificationEvaluator : QualificationController
+    public class CandidateQualificationEvaluator : QualificationManager
     {
         
         public CandidateQualificationEvaluator(Candidate candidate, Organization organization) : base(candidate, organization)
