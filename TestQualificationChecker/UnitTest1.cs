@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QualificationChecker.Controllers;
 using QualificationChecker.Models;
-using static QualificationChecker.Controllers.CandidatesController;
+using static QualificationChecker.Controllers.OrganizationController;
 
 namespace QualificationChecker.Tests
 {
     [TestClass]
-    public class CandidatesControllerTests
+    public class OrganizationControllerTests
     {
 
         [TestMethod]
         public void ShowQualifiedCandidates_ReturnsQualifiedCandidates()
         {
             // Arrange
-
-            CandidatesController controller = new();
+            OrganizationController controller = new();
 
             var request = new MatchRequest
             {

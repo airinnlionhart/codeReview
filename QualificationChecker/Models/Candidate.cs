@@ -34,5 +34,6 @@ namespace QualificationChecker.Models
 
         public required bool Answer { get; set; }
     }
+
 }
 

@@ -13,6 +13,15 @@ namespace QualificationChecker.Models
         public List<OrgQuestion>? OrgQuestions { get; set; }
     }
 
+    public static class OrganizationExtensions
+    {
+        public static Dictionary<int, List<OrgQuestion>> OrgAnswersDictionary(this Organization organization)
+        {
+            return organization.OrgQuestions
+                .GroupBy(q => q.PositionId)
+                .ToDictionary(group => group.Key, group => group.ToList());
+        }
+    }
 }
 
 
