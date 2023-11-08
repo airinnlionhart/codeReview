@@ -50,11 +50,27 @@ namespace QualificationChecker.Tests
                         FullName = "WillShow Smith",
                         Age = 27,
                         OrganizationId = 1,
-                        InterestedPositionIds = new List<int> { 1 },
+                        InterestedPositionIds = new List<int> { 1, 2 },
                         CandidateQuestions = new List<CandidateQuestion>
                         {
                             new CandidateQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
                             new CandidateQuestion { Id = 2, PositionId = 1, QuestionText = "Question 2", Answer = true },
+                            
+                        }
+                    },
+                    new Candidate
+                    {
+                        Id = 2,
+                        FullName = "WillStillShow Smith",
+                        Age = 27,
+                        OrganizationId = 1,
+                        InterestedPositionIds = new List<int> { 1, 2 },
+                        CandidateQuestions = new List<CandidateQuestion>
+                        {
+                            new CandidateQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
+                            new CandidateQuestion { Id = 2, PositionId = 1, QuestionText = "Question 2", Answer = true },
+                            new CandidateQuestion { Id = 3, PositionId = 2, QuestionText = "Question 2", Answer = false },
+
                         }
                     },
                     new Candidate
@@ -132,7 +148,7 @@ namespace QualificationChecker.Tests
             Assert.AreEqual(200, result.StatusCode);
             var qualifiedCandidates = result.Value as List<Candidate>;
             Assert.IsNotNull(qualifiedCandidates);
-            Assert.AreEqual(2, qualifiedCandidates.Count); // Expects only 2 Candidates
+            Assert.AreEqual(3, qualifiedCandidates.Count, $"{result.Value}"); // Expects only 2 Candidates
             
         }
 

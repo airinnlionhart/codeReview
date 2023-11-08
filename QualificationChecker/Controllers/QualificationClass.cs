@@ -1,4 +1,6 @@
-﻿using QualificationChecker.Models;
+﻿using System.Linq;
+using System.Security.Cryptography;
+using QualificationChecker.Models;
 
 namespace QualificationChecker.Controllers
 {
@@ -16,13 +18,10 @@ namespace QualificationChecker.Controllers
 
         }
 
-        // Method to tell if a Candidate is interested in the position
+        // Method to tell if a Candidate is interested in any of the position
         public bool IsCandidateInterestedInPosition()
         {
-
-            return Candidate.InterestedPositionIds != null ||
-            Candidate.InterestedPositionIds.Any(OrgQuestionsDictionary.ContainsKey);
-
+            return Candidate.InterestedPositionIds.Any(positionId => Organization.OrgAnswersDictionary().ContainsKey(positionId)); 
         }
 
         // Method to make sure they meet the age requirement
@@ -51,41 +50,44 @@ namespace QualificationChecker.Controllers
         // Method to find qualified candidates
         public void FindQualifiedCandidates(Candidate candidate)
         {
-             if (CandidateMatches(candidate) && IsQualified())
+            {
+                if (CandidateMatches(candidate) && IsQualified())
                 {
                     QualifiedCandidates.Add(candidate);
                 }
-            
+            }
+
         }
 
         public bool CandidateMatches(Candidate candidate)
         {
-            bool allAnswersMatch = true;
+            bool matches = true;
 
-            foreach (var candidateAnswer in candidate.CandidateQuestions)
+            foreach (var position in Candidate.InterestedPositionIds)
             {
-                var lookupKey = candidateAnswer.PositionId;
-
-                if (!Organization.OrgAnswersDictionary().TryGetValue(lookupKey, out var orgAnswers))
+                bool allAnswersMatch = true;
+                foreach (var candidateAnswer in candidate.CandidateQuestions.Where(poistions => poistions.PositionId == position))
                 {
-                    allAnswersMatch = false;
-                    break;
-                }
+                    var lookupKey = position;
 
-                if (orgAnswers.Count != candidate.CandidateQuestions.Count)
-                {
-                    allAnswersMatch = false;
-                    break;
+                    if (!Organization.OrgAnswersDictionary().TryGetValue(lookupKey, out var orgAnswers)
+                        || orgAnswers.Count != candidate.CandidateQuestions.Count(poistion => poistion.PositionId == lookupKey)
+                        || !orgAnswers.All(orgAnswer => MatchAnswers(candidateAnswer.Answer, orgAnswer.Answer))
+                        )
+                    {
+                        allAnswersMatch = false;
+                        break;
+                    }
                 }
-
-                if (!orgAnswers.All(orgAnswer => MatchAnswers(candidateAnswer.Answer, orgAnswer.Answer)))
+                if (allAnswersMatch)
                 {
-                    allAnswersMatch = false;
-                    break;
+                    Candidate.QualifiedPositions.Add(position);
                 }
+                
             }
 
-            return allAnswersMatch;
+            matches = Candidate.QualifiedPositions != null && Candidate.QualifiedPositions.Any();
+            return matches;
         }
 
         public List<Candidate> ReturnListOfCandidate()
@@ -120,9 +122,13 @@ namespace QualificationChecker.Controllers
                 if (CandidateMatches(candidate) && IsQualified())
                 {
                     QualifiedCandidates.Add(candidate);
+                    
+
                 }
             }
 
         }
+
+        
     }
 }
