@@ -7,23 +7,22 @@ namespace QualificationChecker.Controllers
         public Candidate Candidate { get; private set; }
         public Organization Organization { get; private set; }
         protected List<Candidate> QualifiedCandidates = new List<Candidate>();
+        private Dictionary<int, List<OrgQuestion>> OrgQuestionsDictionary;
 
         protected QualificationManager(Candidate candidate, Organization organization)
         {
             Candidate = candidate;
             Organization = organization;
+
         }
 
         // Method to tell if a Candidate is interested in the position
         public bool IsCandidateInterestedInPosition()
         {
-            if (Candidate.InterestedPositionIds == null)
-            {
-                return false;
-            }
 
-            return Candidate.InterestedPositionIds.Any(candidatePositionId =>
-                Organization.OrgQuestions.Any(OrgQuestion => OrgQuestion.PositionId == candidatePositionId));
+            return Candidate.InterestedPositionIds != null ||
+            Candidate.InterestedPositionIds.Any(OrgQuestionsDictionary.ContainsKey);
+
         }
 
         // Method to make sure they meet the age requirement
@@ -52,13 +51,11 @@ namespace QualificationChecker.Controllers
         // Method to find qualified candidates
         public void FindQualifiedCandidates(Candidate candidate)
         {
-            {
-                if (CandidateMatches(candidate) && IsQualified())
+             if (CandidateMatches(candidate) && IsQualified())
                 {
                     QualifiedCandidates.Add(candidate);
                 }
-            }
-
+            
         }
 
         public bool CandidateMatches(Candidate candidate)
@@ -99,12 +96,12 @@ namespace QualificationChecker.Controllers
 
     public class CandidateQualificationEvaluator : QualificationManager
     {
-        
+
         public CandidateQualificationEvaluator(Candidate candidate, Organization organization) : base(candidate, organization)
         {
 
         }
-        
+
         public bool CustomCriteriaMet()
         {
             return Candidate.Age < 68; // Implement your custom criteria logic here.
@@ -116,7 +113,7 @@ namespace QualificationChecker.Controllers
             return CustomCriteriaMet() && base.IsQualified();
         }
 
-      
+
         public new void FindQualifiedCandidates(Candidate candidate)
         {
             {

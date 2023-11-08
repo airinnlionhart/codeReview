@@ -25,6 +25,7 @@ namespace QualificationChecker.Tests
                     {
                         new OrgQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
                         new OrgQuestion { Id = 2, PositionId = 1, QuestionText = "Question 2", Answer = true },
+                        new OrgQuestion { Id = 3, PositionId = 2, QuestionText = "Question 2", Answer = true },
                     }
                 },
                 Candidates = new List<Candidate>
@@ -40,6 +41,7 @@ namespace QualificationChecker.Tests
                         {
                             new CandidateQuestion { Id = 1, PositionId = 1, QuestionText = "Question 1", Answer = true },
                             new CandidateQuestion { Id = 2, PositionId = 1, QuestionText = "Question 2", Answer = true },
+                            new CandidateQuestion { Id = 3, PositionId = 2, QuestionText = "Question 2", Answer = true },
                         }
                     },
                     new Candidate
