@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations; // For validation attributes
+﻿using System.ComponentModel.DataAnnotations; // For validation attributes
 
 namespace QualificationChecker.Models
 {
@@ -10,7 +8,7 @@ namespace QualificationChecker.Models
 
         [Required(ErrorMessage = "Full name is required.")]
         [StringLength(100, ErrorMessage = "Full name must be between 1 and 100 characters.", MinimumLength = 1)]
-        public string FullName { get; set; }
+        public required string FullName { get; set; }
 
         [Required(ErrorMessage = "Age is required.")]
         [Range(14, 70, ErrorMessage = "Age must be between 14 and 70.")]
@@ -18,9 +16,16 @@ namespace QualificationChecker.Models
 
         public int OrganizationId { get; set; }
 
-        public List<int> InterestedPositionIds { get; set; }
+        public List<int>? InterestedPositionIds { get; set; }
 
-        public List<CandidateQuestion> CandidateQuestions { get; set; }
+        public List<CandidateQuestion>? CandidateQuestions { get; set; }
+
+        public List<int> QualifiedPositions { get; } = new List<int>();
+
+        public static implicit operator Candidate(List<Candidate> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class CandidateQuestion
@@ -32,9 +37,10 @@ namespace QualificationChecker.Models
 
         [Required(ErrorMessage = "Question text is required.")]
         [StringLength(500, ErrorMessage = "Question text must be between 1 and 500 characters.", MinimumLength = 1)]
-        public string QuestionText { get; set; }
+        public required string QuestionText { get; set; }
 
-        public bool Answer { get; set; }
+        public required bool Answer { get; set; }
     }
+
 }
 
