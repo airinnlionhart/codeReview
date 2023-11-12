@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using QualificationChecker.Models;
 
 namespace QualificationChecker.Controllers
 {
@@ -20,30 +19,9 @@ namespace QualificationChecker.Controllers
                 return Ok("Your organization does not have any Qualification questions; please add them.");
             }
 
-            try
-            {
-                List<Candidate> qualifiedCandidates = new List<Candidate>();
+            var getCandidates = new CandidateQualificationEvaluator(request.Candidates, request.Organization).ReturnQualifiedCandidates();
+            return Ok(getCandidates);
 
-                foreach (var candidate in request.Candidates)
-                {
-                    var myqualifiedCandidates = new CandidateQualificationEvaluator(candidate, request.Organization);
-                    myqualifiedCandidates.FindQualifiedCandidates(candidate);
-                    qualifiedCandidates.AddRange(myqualifiedCandidates.ReturnListOfCandidate());
-                }
-
-                if (qualifiedCandidates.Count >= 1)
-                {
-                    return Ok(qualifiedCandidates);
-                }
-                else
-                {
-                    return Ok("No Matching Candidates");
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"{ex} error occurred while processing the request.");
-            }
         }
 
     }
