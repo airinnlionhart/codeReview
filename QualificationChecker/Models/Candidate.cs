@@ -19,6 +19,13 @@ namespace QualificationChecker.Models
         public List<int>? InterestedPositionIds { get; set; }
 
         public List<CandidateQuestion>? CandidateQuestions { get; set; }
+
+        public List<int> QualifiedPositions { get; } = new List<int>();
+
+        public static implicit operator Candidate(List<Candidate> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class CandidateQuestion
@@ -34,5 +41,6 @@ namespace QualificationChecker.Models
 
         public required bool Answer { get; set; }
     }
+
 }
 
